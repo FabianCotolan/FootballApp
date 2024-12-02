@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "61331905832",
+    "project_id": "footballapp-3ffd6",
+    "storage_bucket": "footballapp-3ffd6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:61331905832:android:b0fb8afad0bc65eb07041d",
+        "android_client_info": {
+          "package_name": "com.galaxies.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "61331905832-7bi9qa03njm7u1ce1eurrqfv330mfcmj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.galaxies.firebase",
+            "certificate_hash": "9a6c625ce8b058a2ea07b8315f90bccf4453c0f8"
+          }
+        },
+        {
+          "client_id": "61331905832-vlek135fioe7emj4e1ola8efgtcq1e6g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5ir2cZhmOdEKXxCpHZBxh_yzBR9jd7AI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "61331905832-bjn4c9lloas2aom66sefcf0isceqmngn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "61331905832-fqheh8p2sjtjiksk00kn726im3ignk6s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.galaxies.firebase"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
