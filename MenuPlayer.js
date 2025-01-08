@@ -1,29 +1,32 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-export default function MenuScreen({ navigation }) {
-  const handleOptionSelect = (option) => {
-    if (option === "Player") {
-      navigation.navigate("MenuPlayer"); 
-    } else if (option === "Coach") {
-      navigation.navigate("MenuCoach"); 
-    }
+export default function MenuPlayer({ navigation }) {
+  const handleAction = (action) => {
+    console.log(`Selected action: ${action}`);
+    alert(`You selected: ${action}`);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Choose Your Role</Text>
+      <Text style={styles.title}>Player Menu</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => handleOptionSelect("Player")}
+        onPress={() => handleAction("Training Video")}
       >
-        <Text style={styles.buttonText}>Player</Text>
+        <Text style={styles.buttonText}>Training Video</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => handleOptionSelect("Coach")}
+        onPress={() => handleAction("Improve Skills")}
       >
-        <Text style={styles.buttonText}>Coach</Text>
+        <Text style={styles.buttonText}>Improve Skills</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => handleAction("View Skills")}
+      >
+        <Text style={styles.buttonText}>View Skills</Text>
       </TouchableOpacity>
     </View>
   );
@@ -38,7 +41,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: "bold",
     marginBottom: 40,
     color: "#333",

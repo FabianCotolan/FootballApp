@@ -8,20 +8,29 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    if (email && password) {
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log("User logged in:", user);
-          navigation.navigate("Menu"); // Redirect to MenuScreen
-        })
-        .catch((error) => {
-          console.error("Firebase Login Error:", error);
-          Alert.alert("Error", error.message);
-        });
-    } else {
-      Alert.alert("Error", "Please enter both email and password.");
+    if (!email || !password) {
+      // Verificare dacă câmpurile sunt goale
+      Alert.alert("Error", "Please fill out both email and password fields.");
+      return; // Ieșire din funcție pentru a evita alte erori
     }
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log("User logged in:", user);
+        navigation.navigate("Menu"); // Redirect to MenuScreen
+      })
+      .catch((error) => {
+        console.error("Login Error:", error);
+        if (
+          error.code === "auth/wrong-password" ||
+          error.code === "auth/user-not-found"
+        ) {
+          Alert.alert("Invalid Credentials", "Email or password is incorrect.");
+        } else {
+          Alert.alert("Login Error", error.message);
+        }
+      });
   };
 
   return (

@@ -4,6 +4,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './LoginScreen';
 import SignUpScreen from './SignUpScreen';
 import MenuScreen from './MenuScreen';
+import MenuCoach from './MenuCoach'; 
+import MenuPlayer from './MenuPlayer'; 
+
 
 const Stack = createStackNavigator();
 
@@ -26,6 +29,17 @@ export default function App() {
           component={MenuScreen}
           options={{ title: 'Menu' }}
         />
+        <Stack.Screen
+          name="MenuCoach"
+          component={MenuCoach}
+          options={{ title: 'Coach Menu' }}
+        />
+        <Stack.Screen
+          name="MenuPlayer"
+          component={MenuPlayer} 
+          options={{ title: "Player Menu" }}
+           />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
