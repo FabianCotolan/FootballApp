@@ -1,19 +1,43 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const getFriendlyErrorMessage = (errorCode) => {
+    const errorMessages = {
+      "auth/invalid-email": "The email address is not valid. Please check and try again.",
+      "auth/user-disabled": "This account has been disabled. Please contact support.",
+      "auth/user-not-found": "No account found with this email. Please sign up first.",
+      "auth/wrong-password": "Incorrect password. Please try again.",
+      "auth/too-many-requests": "Too many login attempts. Please wait and try again later.",
+      // Adaugă alte coduri de eroare Firebase aici, dacă este necesar
+    };
+
+    return errorMessages[errorCode] || "An unexpected error occurred. Please try again.";
+  };
 
   const handleLogin = () => {
+    setErrorMessage(""); // Resetează mesajul de eroare
+
+    // Verifică dacă câmpurile sunt completate
     if (!email || !password) {
-      // Verificare dacă câmpurile sunt goale
-      Alert.alert("Error", "Please fill out both email and password fields.");
-      return; // Ieșire din funcție pentru a evita alte erori
+      setErrorMessage("Please fill out both email and password fields.");
+      return;
     }
 
+    // Verifică formatul email-ului
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setErrorMessage("Please enter a valid email address.");
+      return;
+    }
+
+    // Încearcă autentificarea
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -22,20 +46,17 @@ export default function LoginScreen({ navigation }) {
       })
       .catch((error) => {
         console.error("Login Error:", error);
-        if (
-          error.code === "auth/wrong-password" ||
-          error.code === "auth/user-not-found"
-        ) {
-          Alert.alert("Invalid Credentials", "Email or password is incorrect.");
-        } else {
-          Alert.alert("Login Error", error.message);
-        }
+        const friendlyMessage = getFriendlyErrorMessage(error.code);
+        setErrorMessage(friendlyMessage);
       });
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
+      {errorMessage ? (
+        <Text style={styles.errorText}>{errorMessage}</Text>
+      ) : null}
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -75,6 +96,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 40,
     color: "#333",
+  },
+  errorText: {
+    color: "#ff0000",
+    fontSize: 16,
+    marginBottom: 10,
   },
   input: {
     width: "100%",

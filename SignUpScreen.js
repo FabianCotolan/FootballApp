@@ -1,33 +1,53 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 
 export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const getFriendlyErrorMessage = (errorCode) => {
+    const errorMessages = {
+      "auth/invalid-email": "The email address is not valid. Please check and try again.",
+      "auth/email-already-in-use": "This email is already associated with an account.",
+      "auth/weak-password": "The password is too weak. Please use a stronger password.",
+      "auth/too-many-requests": "Too many attempts. Please wait and try again later.",
+    };
+
+    return errorMessages[errorCode] || "An unexpected error occurred. Please try again.";
+  };
 
   const handleSignUp = () => {
-    if (email && password) {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log("User created:", user);
-          Alert.alert("Sign Up Successful", `Account created for ${user.email}!`);
-          navigation.navigate("Login"); // Redirect to LoginScreen after successful sign-up
-        })
-        .catch((error) => {
-          console.error("Firebase SignUp Error:", error);
-          Alert.alert("Error", error.message);
-        });
-    } else {
-      Alert.alert("Error", "Please fill out all fields.");
+    setErrorMessage(""); // Reset error message
+
+    if (!email || !password) {
+      setErrorMessage("Please fill out both email and password fields.");
+      return;
     }
+
+    // Perform sign-up with Firebase
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log("User created:", user);
+        setErrorMessage("Account created successfully! Redirecting...");
+        navigation.navigate("Login"); // Redirect to LoginScreen after successful sign-up
+      })
+      .catch((error) => {
+        console.error("Firebase SignUp Error:", error);
+        const friendlyMessage = getFriendlyErrorMessage(error.code);
+        setErrorMessage(friendlyMessage);
+      });
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
+      {errorMessage ? (
+        <Text style={styles.errorText}>{errorMessage}</Text>
+      ) : null}
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -67,6 +87,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 40,
     color: "#333",
+  },
+  errorText: {
+    color: "#ff0000",
+    fontSize: 16,
+    marginBottom: 10,
   },
   input: {
     width: "100%",
