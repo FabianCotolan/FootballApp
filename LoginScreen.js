@@ -15,29 +15,29 @@ export default function LoginScreen({ navigation }) {
       "auth/user-not-found": "No account found with this email. Please sign up first.",
       "auth/wrong-password": "Incorrect password. Please try again.",
       "auth/too-many-requests": "Too many login attempts. Please wait and try again later.",
-      // Adaugă alte coduri de eroare Firebase aici, dacă este necesar
+      
     };
 
     return errorMessages[errorCode] || "An unexpected error occurred. Please try again.";
   };
 
   const handleLogin = () => {
-    setErrorMessage(""); // Resetează mesajul de eroare
+    setErrorMessage(""); 
 
-    // Verifică dacă câmpurile sunt completate
+    
     if (!email || !password) {
       setErrorMessage("Please fill out both email and password fields.");
       return;
     }
 
-    // Verifică formatul email-ului
+    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setErrorMessage("Please enter a valid email address.");
       return;
     }
 
-    // Încearcă autentificarea
+    
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;

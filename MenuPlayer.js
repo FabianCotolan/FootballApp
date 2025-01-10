@@ -3,8 +3,12 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 export default function MenuPlayer({ navigation }) {
   const handleAction = (action) => {
-    console.log(`Selected action: ${action}`);
-    alert(`You selected: ${action}`);
+    if (action === "Training Video") {
+      navigation.navigate("TrainingVideoScreen"); // Navigare către pagina TrainingVideoScreen
+    } else {
+      console.log(`Selected action: ${action}`);
+      alert(`You selected: ${action}`);
+    }
   };
 
   return (
