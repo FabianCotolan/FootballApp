@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getFirestore } from "firebase/firestore"; // Import Firestore
 import { getAnalytics } from "firebase/analytics";
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyCkXD2OgOlpJf3e6mnKbDnOAODRsl64FZw",
   authDomain: "footballapp-3ffd6.firebaseapp.com",

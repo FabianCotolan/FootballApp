@@ -9,9 +9,8 @@ export default function MenuPlayer({ navigation }) {
     if (action === "View Skills") {
       navigation.navigate("ViewSkillsScreen");
     }    
-    else {
-      console.log(`Selected action: ${action}`);
-      alert(`You selected: ${action}`);
+    if (action === "Improve Skills") {
+      navigation.navigate("ImproveSkillsScreen");
     }
   };
 

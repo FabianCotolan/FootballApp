@@ -8,7 +8,7 @@ import MenuCoach from './MenuCoach';
 import MenuPlayer from './MenuPlayer'; 
 import TrainingVideoScreen from "./TrainingVideoScreen";
 import ViewSkillsScreen from './ViewSkillsScreen';
-
+import ImproveSkillsScreen from './ImproveSkillsScreen';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +50,11 @@ export default function App() {
         name="ViewSkillsScreen"
         component={ViewSkillsScreen}
         options={{ title: "View Skills" }}
+        />
+        <Stack.Screen
+        name="ImproveSkillsScreen"
+        component={ImproveSkillsScreen}
+        options={{ title: "Improve Skills" }}
         />
 
         
