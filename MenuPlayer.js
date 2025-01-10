@@ -5,7 +5,11 @@ export default function MenuPlayer({ navigation }) {
   const handleAction = (action) => {
     if (action === "Training Video") {
       navigation.navigate("TrainingVideoScreen"); // Navigare către pagina TrainingVideoScreen
-    } else {
+    } 
+    if (action === "View Skills") {
+      navigation.navigate("ViewSkillsScreen");
+    }    
+    else {
       console.log(`Selected action: ${action}`);
       alert(`You selected: ${action}`);
     }
