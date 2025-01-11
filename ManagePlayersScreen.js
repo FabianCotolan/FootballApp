@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet } from "react-native";
-import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { db } from "./firebase";
+import { collection, addDoc, getDocs, query, where, deleteDoc, doc } from "firebase/firestore";
+import { db, auth } from "./firebase";
 
 export default function ManagePlayersScreen() {
   const [players, setPlayers] = useState([]);
@@ -10,14 +10,18 @@ export default function ManagePlayersScreen() {
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const [position, setPosition] = useState("");
+  const userId = auth.currentUser?.uid;
 
   useEffect(() => {
     fetchPlayers();
-  }, []);
+  }, [userId]);
 
   const fetchPlayers = async () => {
+    if (!userId) return;
+
     try {
-      const querySnapshot = await getDocs(collection(db, "players"));
+      const q = query(collection(db, "players"), where("userId", "==", userId));
+      const querySnapshot = await getDocs(q);
       const playersList = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setPlayers(playersList);
     } catch (error) {
@@ -38,8 +42,9 @@ export default function ManagePlayersScreen() {
         height,
         weight,
         position,
+        userId,
       });
-      setPlayers([...players, { id: docRef.id, name, age, height, weight, position }]);
+      setPlayers([...players, { id: docRef.id, name, age, height, weight, position, userId }]);
       setName("");
       setAge("");
       setHeight("");
