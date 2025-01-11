@@ -10,7 +10,7 @@ import TrainingVideoScreen from "./TrainingVideoScreen";
 import ViewSkillsScreen from './ViewSkillsScreen';
 import ImproveSkillsScreen from './ImproveSkillsScreen';
 import ManagePlayersScreen from './ManagePlayersScreen';
-
+import AddPlayerDetailsScreen from './AddPlayerDetailsScreen';
 
 const Stack = createStackNavigator();
 
@@ -62,6 +62,11 @@ export default function App() {
         name="ManagePlayersScreen"
         component={ManagePlayersScreen}
         options={{ title: "Manage Player" }}
+        />
+        <Stack.Screen
+        name="AddPlayerDetailsScreen"
+        component={AddPlayerDetailsScreen}
+        options={{ title: "Add Player Details" }}
         />
 
         

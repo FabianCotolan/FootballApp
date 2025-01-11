@@ -5,10 +5,10 @@ export default function MenuCoach({ navigation }) {
   const handleAction = (action) => {
     if (action === "Manage Player") {
       navigation.navigate("ManagePlayersScreen");
-    } else {
-      console.log(`Selected action: ${action}`);
-      alert(`You selected: ${action}`);
     }
+    if (action === "Add player details") {
+      navigation.navigate("AddPlayerDetailsScreen");
+    } 
   };
 
 
