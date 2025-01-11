@@ -3,10 +3,14 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 export default function MenuCoach({ navigation }) {
   const handleAction = (action) => {
-    console.log(`Selected action: ${action}`);
-    // Navighează sau execută acțiuni bazate pe selecție.
-    alert(`You selected: ${action}`);
+    if (action === "Manage Player") {
+      navigation.navigate("ManagePlayersScreen");
+    } else {
+      console.log(`Selected action: ${action}`);
+      alert(`You selected: ${action}`);
+    }
   };
+
 
   return (
     <View style={styles.container}>
