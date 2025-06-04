@@ -9,6 +9,9 @@ export default function MenuCoach({ navigation }) {
     if (action === "Add player details") {
       navigation.navigate("AddPlayerDetailsScreen");
     } 
+    if (action === "Create training sessions") {
+      navigation.navigate("CreateTrainingScreen");
+}
   };
 
 
