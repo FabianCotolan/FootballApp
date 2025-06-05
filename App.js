@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './LoginScreen';
@@ -12,11 +13,23 @@ import ImproveSkillsScreen from './ImproveSkillsScreen';
 import ManagePlayersScreen from './ManagePlayersScreen';
 import AddPlayerDetailsScreen from './AddPlayerDetailsScreen';
 import CreateTrainingScreen from './CreateTrainingScreen';
+import AnalyzePerformanceScreen from './AnalyzePerformanceScreen';
+import '@tensorflow/tfjs-react-native';
+
 
 
 const Stack = createStackNavigator();
 
 export default function App() {
+
+  useEffect(() => {
+    (async () => {
+      await tf.ready();
+      await tf.setBackend('cpu'); // stabil backend pentru Expo
+      console.log('TFJS backend:', tf.getBackend());
+    })();
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
@@ -74,6 +87,11 @@ export default function App() {
         name="CreateTrainingScreen"
         component={CreateTrainingScreen}
         options={{ title: "Create Training Sessions" }}
+        />
+        <Stack.Screen
+        name="AnalyzePerformanceScreen"
+        component={AnalyzePerformanceScreen}
+        options={{ title: "Analyze Performance" }}
         />
 
         

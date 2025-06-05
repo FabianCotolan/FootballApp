@@ -11,6 +11,9 @@ export default function MenuCoach({ navigation }) {
     } 
     if (action === "Create training sessions") {
       navigation.navigate("CreateTrainingScreen");
+    }
+    if (action === "Analyze performance") {
+      navigation.navigate("AnalyzePerformanceScreen");
 }
   };
 
