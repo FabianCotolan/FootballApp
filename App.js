@@ -14,6 +14,7 @@ import ManagePlayersScreen from './ManagePlayersScreen';
 import AddPlayerDetailsScreen from './AddPlayerDetailsScreen';
 import CreateTrainingScreen from './CreateTrainingScreen';
 import AnalyzePerformanceScreen from './AnalyzePerformanceScreen';
+import TrainingRecommendationsScreen from './TrainingRecommendationsScreen';
 import '@tensorflow/tfjs-react-native';
 
 
@@ -92,6 +93,11 @@ export default function App() {
         name="AnalyzePerformanceScreen"
         component={AnalyzePerformanceScreen}
         options={{ title: "Analyze Performance" }}
+        />
+        <Stack.Screen
+        name="TrainingRecommendations"
+        component={TrainingRecommendationsScreen}
+        options={{ title: "Training Recommendations" }}
         />
 
         

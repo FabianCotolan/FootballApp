@@ -14,7 +14,10 @@ export default function MenuCoach({ navigation }) {
     }
     if (action === "Analyze performance") {
       navigation.navigate("AnalyzePerformanceScreen");
-}
+    }
+    if (action === "Training Recommendations") {
+      navigation.navigate("TrainingRecommendations");
+    }
   };
 
 
@@ -45,6 +48,14 @@ export default function MenuCoach({ navigation }) {
       >
         <Text style={styles.buttonText}>Analyze Performance</Text>
       </TouchableOpacity>
+      
+      <TouchableOpacity
+      style={styles.button}
+      onPress={() => handleAction("Training Recommendations")}
+      >
+    <Text style={styles.buttonText}>Training Recommendations</Text>
+    </TouchableOpacity>
+
     </View>
   );
 }
