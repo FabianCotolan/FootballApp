@@ -56,7 +56,7 @@ export default function CreateTrainingScreen() {
 
   const handleCreateSession = async () => {
     if (selectedPlayers.length === 0 || selectedExercises.length === 0) {
-      Alert.alert("Error", "Selectează cel puțin un jucător și un antrenament.");
+      Alert.alert("Error", "Select at least one player and one training session.");
       return;
     }
 
@@ -68,7 +68,7 @@ export default function CreateTrainingScreen() {
         date: date.toISOString(),
         notes,
       });
-      Alert.alert("Succes", "Sesiunea de antrenament a fost creată.");
+      Alert.alert("Succes", "The training session has been created.");
       setSelectedPlayers([]);
       setSelectedExercises([]);
       setNotes("");
@@ -78,7 +78,7 @@ export default function CreateTrainingScreen() {
       setSessions(list);
     } catch (error) {
       console.error("Error creating session:", error);
-      Alert.alert("Eroare", "Nu s-a putut salva sesiunea.");
+      Alert.alert("Eroare", "Error saving session");
     }
   };
 
@@ -88,7 +88,7 @@ export default function CreateTrainingScreen() {
       setSessions(sessions.filter((session) => session.id !== id));
     } catch (error) {
       console.error("Error deleting session:", error);
-      Alert.alert("Eroare", "Nu s-a putut șterge sesiunea.");
+      Alert.alert("Eroare", "Error deleting session");
     }
   };
 
@@ -144,7 +144,7 @@ export default function CreateTrainingScreen() {
 
       <TextInput
         style={styles.textArea}
-        placeholder="Observații pentru antrenament..."
+        placeholder="Training notes..."
         value={notes}
         onChangeText={setNotes}
         multiline

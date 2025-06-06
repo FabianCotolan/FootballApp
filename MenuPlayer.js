@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 export default function MenuPlayer({ navigation }) {
   const handleAction = (action) => {
     if (action === "Training Video") {
-      navigation.navigate("TrainingVideoScreen"); // Navigare către pagina TrainingVideoScreen
+      navigation.navigate("TrainingVideoScreen"); // Navigate to TrainingVideoScreen
     } 
     if (action === "View Skills") {
       navigation.navigate("ViewSkillsScreen");

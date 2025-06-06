@@ -58,10 +58,10 @@ export default function AnalyzePerformanceScreen() {
         playerId,
         ...data,
       });
-      Alert.alert("Succes", "Statistici salvate.");
+      Alert.alert("Succes", "Statistics saved.");
     } catch (error) {
       console.error("Error saving stats:", error);
-      Alert.alert("Eroare", "Nu s-au putut salva statisticile.");
+      Alert.alert("Eroare", "Error saving statistics.");
     }
   };
 
@@ -96,7 +96,7 @@ export default function AnalyzePerformanceScreen() {
         return (
           <View key={player.id} style={styles.card}>
             <Text style={styles.name}>{player.name}</Text>
-            <Text style={styles.score}>Clasificare ML: {prediction || 'Apasă pentru analiză'}</Text>
+            <Text style={styles.score}>Classification ML: {prediction || 'Click for analysis'}</Text>
 
             <TextInput style={styles.input} placeholder="Distance Covered (km)" keyboardType="numeric"
               onChangeText={(value) => handleInputChange(player.id, "distance", value)} />
@@ -110,11 +110,11 @@ export default function AnalyzePerformanceScreen() {
               onChangeText={(value) => handleInputChange(player.id, "shotsOnTarget", value)} />
 
             <TouchableOpacity style={styles.predictButton} onPress={() => handlePredict(player.id, { ...player, ...stats })}>
-              <Text style={styles.predictText}>Generează evaluare</Text>
+              <Text style={styles.predictText}>Generate evaluation</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.saveButton} onPress={() => saveExtendedStats(player.id)}>
-              <Text style={styles.saveText}>Salvează statistici</Text>
+              <Text style={styles.saveText}>Save statistics</Text>
             </TouchableOpacity>
           </View>
         );

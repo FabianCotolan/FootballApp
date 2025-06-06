@@ -5,7 +5,7 @@ export async function predictPlayerLevel(model, input) {
   const prediction = model.predict(inputTensor);
   const result = await prediction.data();
 
-  const classes = ['foarte bun', 'bun', 'mediocru', 'slab'];
+  const classes = ['Very Good Player', 'Good Player', 'Normal Player', 'Bad player'];
   const index = result.indexOf(Math.max(...result));
   return classes[index];
 }
