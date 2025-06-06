@@ -10,6 +10,8 @@ export default function ManagePlayersScreen() {
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const [position, setPosition] = useState("");
+  const [message, setMessage] = useState(""); //change
+  const [messageType, setMessageType] = useState("info"); //change
   const userId = auth.currentUser?.uid;
 
   useEffect(() => {
@@ -31,7 +33,8 @@ export default function ManagePlayersScreen() {
 
   const addPlayer = async () => {
     if (!name || !age || !height || !weight || !position) {
-      alert("Please fill out all fields.");
+      setMessage("Please fill out all fields."); 
+      setMessageType("error"); 
       return;
     }
 
@@ -50,6 +53,7 @@ export default function ManagePlayersScreen() {
       setHeight("");
       setWeight("");
       setPosition("");
+      setMessage(""); 
     } catch (error) {
       console.error("Error adding player:", error);
     }
@@ -119,6 +123,17 @@ export default function ManagePlayersScreen() {
       <TouchableOpacity style={styles.addButton} onPress={addPlayer}>
         <Text style={styles.addButtonText}>Add Player</Text>
       </TouchableOpacity>
+      {message !== "" && ( 
+        <Text 
+          style={[ 
+            styles.message, 
+            messageType === "error" ? styles.errorText : styles.successText, 
+          ]} 
+        > 
+          {message} 
+        </Text> 
+      )} 
+
       <FlatList
         data={players}
         keyExtractor={(item) => item.id}
@@ -194,4 +209,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  message: { 
+    textAlign: "center", 
+    marginBottom: 10, 
+    fontSize: 16, 
+  }, 
+  errorText: { 
+    color: "#dc3545", 
+  }, 
+  successText: { 
+    color: "#28a745", 
+  }, 
 });

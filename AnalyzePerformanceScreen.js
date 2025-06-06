@@ -12,6 +12,9 @@ export default function AnalyzePerformanceScreen() {
   const [extendedStats, setExtendedStats] = useState({});
   const [model, setModel] = useState(null);
   const [predictions, setPredictions] = useState({});
+  const [message, setMessage] = useState(""); 
+  const [messageType, setMessageType] = useState("info"); 
+
   const userId = auth.currentUser?.uid;
 
   useEffect(() => {
@@ -58,10 +61,12 @@ export default function AnalyzePerformanceScreen() {
         playerId,
         ...data,
       });
-      Alert.alert("Succes", "Statistics saved.");
+      setMessage("Statistics saved."); 
+      setMessageType("success"); 
     } catch (error) {
       console.error("Error saving stats:", error);
-      Alert.alert("Eroare", "Error saving statistics.");
+      setMessage("Error saving statistics."); 
+      setMessageType("error"); 
     }
   };
 
@@ -89,6 +94,18 @@ export default function AnalyzePerformanceScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Analyze Performance</Text>
+
+       {message !== "" && ( 
+        <Text 
+          style={[ 
+            styles.message, 
+            messageType === "error" ? styles.errorText : styles.successText, 
+          ]} 
+        > 
+          {message} 
+        </Text> 
+      )} 
+
       {playerData.map((player) => {
         const stats = extendedStats[player.id] || {};
         const prediction = predictions[player.id];
@@ -181,5 +198,16 @@ const styles = StyleSheet.create({
   saveText: {
     color: '#fff',
     fontWeight: 'bold'
-  }
+  },
+  message: { 
+    textAlign: "center", 
+    marginBottom: 10, 
+    fontSize: 16, 
+  }, 
+  errorText: { 
+    color: "#dc3545", 
+  }, 
+  successText: { 
+    color: "#28a745", 
+  }, 
 });

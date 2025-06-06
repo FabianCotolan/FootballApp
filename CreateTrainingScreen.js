@@ -22,6 +22,8 @@ export default function CreateTrainingScreen() {
   const [showPicker, setShowPicker] = useState(false);
   const [notes, setNotes] = useState("");
   const [sessions, setSessions] = useState([]);
+  const [message, setMessage] = useState(""); 
+  const [messageType, setMessageType] = useState("info"); 
 
   const userId = auth.currentUser?.uid;
 
@@ -56,7 +58,8 @@ export default function CreateTrainingScreen() {
 
   const handleCreateSession = async () => {
     if (selectedPlayers.length === 0 || selectedExercises.length === 0) {
-      Alert.alert("Error", "Select at least one player and one training session.");
+      setMessage("Select at least one player and one training session."); 
+      setMessageType("error"); 
       return;
     }
 
@@ -68,7 +71,7 @@ export default function CreateTrainingScreen() {
         date: date.toISOString(),
         notes,
       });
-      Alert.alert("Succes", "The training session has been created.");
+      
       setSelectedPlayers([]);
       setSelectedExercises([]);
       setNotes("");
@@ -76,9 +79,12 @@ export default function CreateTrainingScreen() {
       const snapshot = await getDocs(query(collection(db, "trainingSessions"), where("coachId", "==", userId)));
       const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setSessions(list);
+      setMessage("The training session has been created."); 
+      setMessageType("success"); 
     } catch (error) {
       console.error("Error creating session:", error);
-      Alert.alert("Eroare", "Error saving session");
+      setMessage("Error saving session."); 
+      setMessageType("error"); 
     }
   };
 
@@ -88,7 +94,8 @@ export default function CreateTrainingScreen() {
       setSessions(sessions.filter((session) => session.id !== id));
     } catch (error) {
       console.error("Error deleting session:", error);
-      Alert.alert("Eroare", "Error deleting session");
+      setMessage("Error deleting session."); 
+      setMessageType("error"); 
     }
   };
 
@@ -102,6 +109,17 @@ export default function CreateTrainingScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Create Training Session</Text>
+
+       {message !== "" && ( 
+        <Text
+          style={[ 
+            styles.message, 
+            messageType === "error" ? styles.errorText : styles.successText, 
+          ]} 
+        > 
+          {message} 
+        </Text> 
+      )} 
 
       <Text style={styles.subtitle}>Select Exercises:</Text>
       {trainingOptions.map((exercise) => (
@@ -253,4 +271,15 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
+   message: { 
+    textAlign: "center", 
+    marginVertical: 10, 
+    fontSize: 16, 
+  }, 
+  errorText: { 
+    color: "#dc3545", 
+  }, 
+  successText: { 
+    color: "#28a745", 
+  }, 
 });
