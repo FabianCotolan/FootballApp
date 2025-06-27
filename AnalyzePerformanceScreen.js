@@ -12,6 +12,9 @@ export default function AnalyzePerformanceScreen() {
   const [extendedStats, setExtendedStats] = useState({});
   const [model, setModel] = useState(null);
   const [predictions, setPredictions] = useState({});
+  const [message, setMessage] = useState(""); 
+  const [messageType, setMessageType] = useState("info"); 
+
   const userId = auth.currentUser?.uid;
 
   useEffect(() => {
@@ -58,10 +61,12 @@ export default function AnalyzePerformanceScreen() {
         playerId,
         ...data,
       });
-      Alert.alert("Succes", "Statistics saved.");
+      setMessage("Statistics saved."); 
+      setMessageType("success"); 
     } catch (error) {
       console.error("Error saving stats:", error);
-      Alert.alert("Eroare", "Error saving statistics.");
+      setMessage("Error saving statistics."); 
+      setMessageType("error"); 
     }
   };
 
@@ -89,6 +94,18 @@ export default function AnalyzePerformanceScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Analyze Performance</Text>
+
+       {message !== "" && ( 
+        <Text 
+          style={[ 
+            styles.message, 
+            messageType === "error" ? styles.errorText : styles.successText, 
+          ]} 
+        > 
+          {message} 
+        </Text> 
+      )} 
+
       {playerData.map((player) => {
         const stats = extendedStats[player.id] || {};
         const prediction = predictions[player.id];
@@ -126,60 +143,82 @@ export default function AnalyzePerformanceScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#eafaf1',
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#1e5128',
   },
   card: {
     backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 10,
+    padding: 16,
+    borderRadius: 12,
     marginBottom: 15,
+    borderColor: "#cfe3cc",
+    borderWidth: 1,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
+    elevation: 2,
   },
   name: {
-    fontSize: 18,
-    fontWeight: 'bold'
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 6,
+    color: '#333',
   },
   score: {
     fontSize: 16,
-    color: '#333'
+    color: '#555',
+    marginBottom: 10,
   },
   input: {
-    backgroundColor: '#eee',
-    borderRadius: 6,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    marginVertical: 4,
+    backgroundColor: "#f8f9fa",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderColor: "#ced4da",
+    borderWidth: 1,
+    marginVertical: 5,
+    fontSize: 16,
   },
   predictButton: {
     marginTop: 10,
     backgroundColor: '#007bff',
-    padding: 10,
-    borderRadius: 6,
+    padding: 12,
+    borderRadius: 10,
     alignItems: 'center',
   },
   predictText: {
     color: '#fff',
-    fontWeight: 'bold'
+    fontSize: 16,
+    fontWeight: '600',
   },
   saveButton: {
     marginTop: 10,
     backgroundColor: '#28a745',
-    padding: 10,
-    borderRadius: 6,
+    padding: 12,
+    borderRadius: 10,
     alignItems: 'center',
   },
   saveText: {
     color: '#fff',
-    fontWeight: 'bold'
-  }
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  message: {
+    textAlign: "center",
+    marginBottom: 10,
+    fontSize: 16,
+  },
+  errorText: {
+    color: "#dc3545",
+  },
+  successText: {
+    color: "#28a745",
+  },
 });

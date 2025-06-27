@@ -127,15 +127,15 @@ export default function AddPlayerDetailsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#eafaf1", 
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
-    color: "#333",
+    color: "#1e5128",
   },
   messageText: {
     fontSize: 16,
@@ -149,43 +149,43 @@ const styles = StyleSheet.create({
   playerContainer: {
     backgroundColor: "#fff",
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 12,
     marginBottom: 15,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2,
+    elevation: 3,
   },
   playerText: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "600",
     marginBottom: 10,
-    color: "#333",
+    color: "#14532d",
   },
   ratingContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 8,
   },
   skillText: {
     fontSize: 16,
     flex: 1,
-    color: "#555",
+    color: "#444",
   },
   starsContainer: {
     flexDirection: "row",
   },
   saveButton: {
-    marginTop: 10,
+    marginTop: 12,
     backgroundColor: "#28a745",
     padding: 10,
-    borderRadius: 8,
+    borderRadius: 10,
     alignItems: "center",
   },
   saveButtonText: {
     color: "#fff",
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "600",
   },
 });

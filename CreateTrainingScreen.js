@@ -22,6 +22,8 @@ export default function CreateTrainingScreen() {
   const [showPicker, setShowPicker] = useState(false);
   const [notes, setNotes] = useState("");
   const [sessions, setSessions] = useState([]);
+  const [message, setMessage] = useState(""); 
+  const [messageType, setMessageType] = useState("info"); 
 
   const userId = auth.currentUser?.uid;
 
@@ -56,7 +58,8 @@ export default function CreateTrainingScreen() {
 
   const handleCreateSession = async () => {
     if (selectedPlayers.length === 0 || selectedExercises.length === 0) {
-      Alert.alert("Error", "Select at least one player and one training session.");
+      setMessage("Select at least one player and one training session."); 
+      setMessageType("error"); 
       return;
     }
 
@@ -68,7 +71,7 @@ export default function CreateTrainingScreen() {
         date: date.toISOString(),
         notes,
       });
-      Alert.alert("Succes", "The training session has been created.");
+      
       setSelectedPlayers([]);
       setSelectedExercises([]);
       setNotes("");
@@ -76,9 +79,12 @@ export default function CreateTrainingScreen() {
       const snapshot = await getDocs(query(collection(db, "trainingSessions"), where("coachId", "==", userId)));
       const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setSessions(list);
+      setMessage("The training session has been created."); 
+      setMessageType("success"); 
     } catch (error) {
       console.error("Error creating session:", error);
-      Alert.alert("Eroare", "Error saving session");
+      setMessage("Error saving session."); 
+      setMessageType("error"); 
     }
   };
 
@@ -88,7 +94,8 @@ export default function CreateTrainingScreen() {
       setSessions(sessions.filter((session) => session.id !== id));
     } catch (error) {
       console.error("Error deleting session:", error);
-      Alert.alert("Eroare", "Error deleting session");
+      setMessage("Error deleting session."); 
+      setMessageType("error"); 
     }
   };
 
@@ -103,6 +110,17 @@ export default function CreateTrainingScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Create Training Session</Text>
 
+       {message !== "" && ( 
+        <Text
+          style={[ 
+            styles.message, 
+            messageType === "error" ? styles.errorText : styles.successText, 
+          ]} 
+        > 
+          {message} 
+        </Text> 
+      )} 
+
       <Text style={styles.subtitle}>Select Exercises:</Text>
       {trainingOptions.map((exercise) => (
         <TouchableOpacity
@@ -115,17 +133,19 @@ export default function CreateTrainingScreen() {
       ))}
 
       <Text style={styles.subtitle}>Select Players:</Text>
-      <View style={styles.largeList}>
-        {players.map((item) => (
-          <TouchableOpacity
-            key={item.id}
-            style={[styles.option, selectedPlayers.includes(item.id) && styles.selected]}
-            onPress={() => toggleSelection(item.id, selectedPlayers, setSelectedPlayers)}
-          >
-            <Text>{item.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+      <View style={styles.scrollablePlayerListContainer}> 
+        <ScrollView style={styles.playerScroll} nestedScrollEnabled={true}> 
+          {players.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              style={[styles.option, selectedPlayers.includes(item.id) && styles.selected]}
+              onPress={() => toggleSelection(item.id, selectedPlayers, setSelectedPlayers)}
+            >
+              <Text>{item.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View> 
 
       <TouchableOpacity onPress={() => setShowPicker(true)}>
         <Text style={styles.dateText}>Date & Time: {date.toLocaleString()}</Text>
@@ -175,82 +195,129 @@ export default function CreateTrainingScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#eafaf1",
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: "bold",
     textAlign: "center",
+    color: "#1e5128",
     marginBottom: 20,
   },
   subtitle: {
     fontSize: 18,
+    color: "#14532d",
     marginVertical: 10,
+    fontWeight: "600",
   },
   option: {
-    padding: 10,
-    backgroundColor: "#eee",
-    borderRadius: 6,
-    marginVertical: 5,
+    padding: 12,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    marginVertical: 6,
+    borderColor: "#cfe3cc",
+    borderWidth: 1,
   },
   selected: {
-    backgroundColor: "#cce5ff",
+    backgroundColor: "#d0f0c0",
+    borderColor: "#28a745",
+    borderWidth: 2,
+  },
+   scrollablePlayerListContainer:{
+    height: 200, 
+    marginBottom: 20, 
+    borderRadius: 10, 
+    overflow: 'hidden', 
+    backgroundColor: "#f0fdf4", 
+    borderColor: "#cfe3cc", 
+    borderWidth: 1, 
+  },
+  playerScroll: { 
+    paddingHorizontal: 5, 
   },
   dateText: {
     marginTop: 10,
     marginBottom: 10,
     fontSize: 16,
-    color: "#007bff",
+    color: "#14532d",
+    fontWeight: "500",
   },
   textArea: {
     height: 100,
     backgroundColor: "#fff",
-    borderRadius: 6,
-    borderColor: "#ccc",
+    borderRadius: 10,
+    borderColor: "#cfe3cc",
     borderWidth: 1,
-    padding: 10,
+    padding: 12,
     marginVertical: 15,
     textAlignVertical: "top",
+    fontSize: 16,
+    color: "#333",
   },
   saveButton: {
     backgroundColor: "#28a745",
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 12,
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 3,
   },
   saveText: {
     color: "#fff",
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "600",
   },
   sessionCard: {
     backgroundColor: "#fff",
-    padding: 10,
-    borderRadius: 6,
-    marginVertical: 5,
+    padding: 15,
+    borderRadius: 12,
+    marginVertical: 8,
+    borderColor: "#cfe3cc",
+    borderWidth: 1,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+    elevation: 2,
   },
   sessionText: {
-    fontSize: 14,
-    color: "#333",
+    fontSize: 15,
+    color: "#444",
+    marginBottom: 3,
   },
   largeList: {
-    maxHeight: 400,
-    marginBottom: 15,
-  },
+  maxHeight: 300, 
+  marginBottom: 25, 
+  paddingBottom: 20, 
+},
   scrollArea: {
     maxHeight: 300,
-    marginBottom: 20,
+    marginBottom: 30,
   },
   deleteButton: {
     marginTop: 10,
-    backgroundColor: "#dc3545",
-    padding: 8,
-    borderRadius: 6,
+    backgroundColor: "#d90429",
+    padding: 10,
+    borderRadius: 8,
     alignItems: "center",
   },
   deleteButtonText: {
     color: "#fff",
-    fontWeight: "bold",
+    fontWeight: "600",
+  },
+  message: {
+    textAlign: "center",
+    marginVertical: 10,
+    fontSize: 16,
+  },
+  errorText: {
+    color: "#d90429",
+  },
+  successText: {
+    color: "#28a745",
   },
 });

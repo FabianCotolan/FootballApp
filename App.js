@@ -87,12 +87,18 @@ export default function App() {
         <Stack.Screen
         name="CreateTrainingScreen"
         component={CreateTrainingScreen}
-        options={{ title: "Create Training Sessions" }}
+        options={{ 
+          title: "Create Training Sessions",
+          headerBackTitle: "Back"
+         }}
+        
         />
         <Stack.Screen
         name="AnalyzePerformanceScreen"
         component={AnalyzePerformanceScreen}
-        options={{ title: "Analyze Performance" }}
+        options={{ 
+          title: "Analyze Performance",
+           headerBackTitle: "Back" }}
         />
         <Stack.Screen
         name="TrainingRecommendations"

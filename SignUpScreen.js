@@ -44,19 +44,21 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
+      <Text style={styles.title}>Create Account</Text>
       {errorMessage ? (
         <Text style={styles.errorText}>{errorMessage}</Text>
       ) : null}
       <TextInput
         style={styles.input}
         placeholder="Email"
+        placeholderTextColor="#aaa"
         value={email}
         onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
+        placeholderTextColor="#aaa"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
@@ -79,29 +81,30 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#eafaf1", 
     padding: 20,
   },
   title: {
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: "bold",
-    marginBottom: 40,
-    color: "#333",
+    color: "#1e5128", 
+    marginBottom: 30,
   },
   errorText: {
-    color: "#ff0000",
-    fontSize: 16,
+    color: "#d90429",
+    fontSize: 15,
     marginBottom: 10,
   },
   input: {
     width: "100%",
     height: 50,
     backgroundColor: "#fff",
-    borderRadius: 8,
+    borderRadius: 12,
     paddingHorizontal: 15,
     marginBottom: 15,
-    borderColor: "#ddd",
+    borderColor: "#cfe3cc",
     borderWidth: 1,
+    fontSize: 16,
   },
   button: {
     width: "100%",
@@ -109,19 +112,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#28a745",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 8,
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
     marginBottom: 10,
   },
   buttonText: {
     color: "#fff",
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "600",
   },
   linkButton: {
     marginTop: 10,
   },
   linkText: {
-    color: "#007bff",
-    fontSize: 16,
+    color: "#14532d",
+    fontSize: 15,
+    textDecorationLine: "underline",
   },
 });

@@ -58,15 +58,15 @@ export default function ImproveSkillsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#eafaf1", 
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
-    color: "#333",
+    color: "#1e5128", 
   },
   listContainer: {
     paddingBottom: 20,
@@ -75,22 +75,22 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: "#fff",
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 12, 
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowRadius: 3,
+    elevation: 3,
   },
   skillTitle: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "600",
     marginBottom: 10,
-    color: "#007bff",
+    color: "#14532d", 
   },
   skillDescription: {
     fontSize: 16,
-    color: "#555",
+    color: "#444",
     lineHeight: 22,
   },
 });

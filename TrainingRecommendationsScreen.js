@@ -16,7 +16,7 @@ export default function TrainingRecommendationsScreen() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`,
+          'Authorization': `Bearer sk-API`,
         },
         body: JSON.stringify({
           model: 'gpt-3.5-turbo',
@@ -73,40 +73,49 @@ export default function TrainingRecommendationsScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#eafaf1',
     flexGrow: 1,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    color: '#333'
+    color: '#1e5128',
   },
   input: {
-    backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 8,
+    backgroundColor: '#ffffff',
+    padding: 16,
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#ddd',
-    minHeight: 80,
+    borderColor: '#cfe3cc',
+    minHeight: 100,
     marginBottom: 15,
     textAlignVertical: 'top',
+    fontSize: 16,
   },
   button: {
-    backgroundColor: '#007bff',
-    padding: 15,
-    borderRadius: 8,
-    alignItems: 'center'
+    backgroundColor: '#28a745',
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    elevation: 2,
   },
   buttonText: {
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontWeight: '600',
+    fontSize: 17,
   },
   response: {
     marginTop: 20,
     fontSize: 16,
-    color: '#333',
+    color: '#444',
+    lineHeight: 22,
+    backgroundColor: '#fdfdfd',
+    padding: 15,
+    borderRadius: 10,
+    borderColor: '#cce5d8',
+    borderWidth: 1,
   },
 });
